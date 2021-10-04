@@ -1,28 +1,55 @@
-package StudentAttendence;
+package StudentAttendance;
 
 import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import models.Lecture;
+import models.Student;
+import models.Subject;
+import models.Teacher;
+
+
+import java.util.*;
+
+import static org.junit.jupiter.api.Assertions.*;
+
 
 public class StepDefinitions {
 
+    private Student student;
+    private Teacher teacher;
+    private Lecture lecture;
+    private Subject subject;
+    private Date date;
+    private List<Student> students = new ArrayList();
+
     @Given("^the student is attending the class$")
     public void the_student_is_attending_the_class() throws Exception {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+        student = new Student("Benjamin");
+        teacher = new Teacher("Lars");
+        subject = new Subject("Software Testing", teacher);
+
+        student.addSubject(subject);
+        teacher.addSubject(subject);
+
+        date = new GregorianCalendar(2014, Calendar.FEBRUARY, 11).getTime();
+        subject.addLecture(date);
+        lecture = subject.getLecture(date);
+
     }
 
     @When("^I fill in the student id$")
     public void i_fill_in_the_student_id() throws Exception {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+        lecture.addAttendee(student);
+        students = lecture.getAttendees();
+
     }
 
     @Then("^the student's attendence the given day should be registered$")
     public void the_student_s_attendence_the_given_day_should_be_registered() throws Exception {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+        assertTrue(students.contains(student));
+
     }
 
     @Given("^I check the attendence system$")

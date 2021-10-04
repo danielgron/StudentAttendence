@@ -1,4 +1,4 @@
-package StudentAttendence;
+package StudentAttendance;
 
 import cucumber.api.CucumberOptions;
 import cucumber.api.junit.Cucumber;

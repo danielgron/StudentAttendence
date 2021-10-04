@@ -1,13 +1,13 @@
-package dk.abda.test.studentattendence;
+package dk.abda.test.studentattendance;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class StudentAttendenceApplication {
+public class StudentAttendanceApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(StudentAttendenceApplication.class, args);
+        SpringApplication.run(StudentAttendanceApplication.class, args);
     }
 
 }
