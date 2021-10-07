@@ -1,13 +1,20 @@
 package models;
 
 import lombok.Data;
+import org.hibernate.annotations.Type;
 
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Transient;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Data
+@Entity
 public class Student {
 
+    @Id
     private UUID id;
     private String name;
     private String email;
@@ -16,7 +23,10 @@ public class Student {
     private String city;
     private String zipcode;
     private String birthdate;
+    @Transient
     private List<Subject> subjects;
+    @Transient
+    private SimpleDateFormat formatter;
 
     public Student(String name) {
         this.id = UUID.randomUUID();
@@ -25,6 +35,8 @@ public class Student {
     }
 
     public Student(String name, String email, String phonenumber, String address, String city, String zipcode, Date birthdate) {
+        this.formatter = new SimpleDateFormat("dd.MM.yyyy");
+
         this.id = UUID.randomUUID();
         this.name = name;
         this.email = email;
@@ -32,7 +44,10 @@ public class Student {
         this.address = address;
         this.city = city;
         this.zipcode = zipcode;
-        this.birthdate = birthdate.toString();
+        this.birthdate = this.formatter.format(birthdate);
+    }
+
+    public Student() {
 
     }
 

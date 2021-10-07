@@ -14,7 +14,8 @@ public class FakeStudentRepository implements IStudentRepository {
 
     @Override
     public Student save(Student newStudent) {
-        students.add(newStudent);
+        if(!students.contains(newStudent))
+            students.add(newStudent);
         return newStudent;
     }
 
@@ -29,5 +30,10 @@ public class FakeStudentRepository implements IStudentRepository {
             }
         }
         return OpStudent;
+    }
+
+    @Override
+    public List<Student> findAll() {
+        return null;
     }
 }

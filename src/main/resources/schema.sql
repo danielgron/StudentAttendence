@@ -1,0 +1,14 @@
+DROP TABLE IF EXISTS STUDENT;
+
+CREATE TABLE STUDENT
+(
+    id VARCHAR PRIMARY KEY,
+    name VARCHAR(25) NOT NULL,
+    email VARCHAR(30) NOT NULL,
+    phonenumber VARCHAR(12) NOT NULL,
+    address VARCHAR(50) NOT NULL,
+    city VARCHAR(20) NOT NULL,
+    zipcode VARCHAR(4) NOT NULL,
+    birthdate VARCHAR(10) NOT NULL,
+);
+
