@@ -4,14 +4,15 @@ import lombok.Data;
 import org.hibernate.annotations.Type;
 
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Transient;
+import javax.persistence.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Data
 @Entity
+@NamedQueries({
+        @NamedQuery(name="Student.findAll", query="SELECT s FROM Student s")
+})
 public class Student {
 
     @Id
@@ -45,6 +46,17 @@ public class Student {
         this.city = city;
         this.zipcode = zipcode;
         this.birthdate = this.formatter.format(birthdate);
+    }
+
+    public Student(Student newStudent) {
+        this.id = UUID.randomUUID();
+        this.name = newStudent.getName();
+        this.email = newStudent.getEmail();
+        this.phonenumber = newStudent.getPhonenumber();
+        this.address = newStudent.getAddress();
+        this.city = newStudent.getCity();
+        this.zipcode = newStudent.getZipcode();
+        this.birthdate = newStudent.getBirthdate();
     }
 
     public Student() {

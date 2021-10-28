@@ -1,4 +1,3 @@
-/*
 package integrationTest;
 
 import org.junit.jupiter.api.Disabled;
@@ -6,13 +5,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import models.Student;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.context.junit4.SpringRunner;
 import repository.IStudentRepository;
 import repository.StudentRepository;
-import service.StudentEntityService;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -34,11 +28,9 @@ public class H2IntegrationTest {
         repository.save(newStudent);
     }
 
-    @Disabled
     @Test
     void testH2DatabaseIsActive() {
         List<Student> students = repository.findAll();
         assertTrue(!students.isEmpty());
     }
 }
-*/
