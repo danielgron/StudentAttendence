@@ -1,7 +1,6 @@
 # StudentAttendence
 
 To make docker container with volume in project folder run:
-##### NB! You might have to change -- for the command to work
 
 ```{r, engine='bash', count_lines}
 docker run --rm -v "[YOUR_PATH_TO_PROJECT_FOLDER]/StudentAttendence/data:/h2-data" --name h2-studentattendance -d -p 9092:9092 -p 8082:8082 buildo/h2database 
