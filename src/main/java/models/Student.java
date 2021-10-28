@@ -49,7 +49,7 @@ public class Student {
     }
 
     public Student(Student newStudent) {
-        this.id = UUID.randomUUID();
+        this.id = newStudent.getId();
         this.name = newStudent.getName();
         this.email = newStudent.getEmail();
         this.phonenumber = newStudent.getPhonenumber();

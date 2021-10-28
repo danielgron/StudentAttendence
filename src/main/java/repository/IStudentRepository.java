@@ -1,5 +1,6 @@
 package repository;
 
+import javassist.NotFoundException;
 import models.Student;
 
 import java.util.List;
@@ -12,4 +13,6 @@ public interface IStudentRepository {
     Optional<Student> findById(UUID id);
 
     List<Student> findAll();
+
+    void delete(UUID id) throws NotFoundException;
 }

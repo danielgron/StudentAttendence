@@ -1,5 +1,6 @@
 package repository;
 
+import javassist.NotFoundException;
 import models.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -49,5 +50,21 @@ public class StudentRepository implements IStudentRepository {
 
         List<Student> students = em.createNamedQuery("Student.findAll", Student.class).getResultList();
         return students;
+    }
+
+    @Override
+    public void delete(UUID id) throws NotFoundException {
+        EntityManager em = emf.createEntityManager();
+
+        em.getTransaction().begin();
+        Student student = em.find(Student.class, id);
+
+        if(student == null) {
+            throw new NotFoundException("Student with id: " + id + " not found");
+        }
+
+        em.remove(student);
+        em.getTransaction().commit();
+        em.close();
     }
 }

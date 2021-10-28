@@ -1,5 +1,6 @@
 package fakes;
 
+import javassist.NotFoundException;
 import models.Student;
 import repository.IStudentRepository;
 
@@ -34,6 +35,23 @@ public class FakeStudentRepository implements IStudentRepository {
 
     @Override
     public List<Student> findAll() {
-        return null;
+        return students;
+    }
+
+    @Override
+    public void delete(UUID id) throws NotFoundException {
+        Student studentToDelete = null;
+
+        for (Student student: students) {
+            if(student.getId().equals(id)) {
+                studentToDelete = student;
+            }
+        }
+
+        if(studentToDelete == null) {
+            throw new NotFoundException("Student with id: " + id + " not found");
+        }
+
+        students.remove(studentToDelete);
     }
 }
