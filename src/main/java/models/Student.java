@@ -11,7 +11,8 @@ import java.util.*;
 @Data
 @Entity
 @NamedQueries({
-        @NamedQuery(name="Student.findAll", query="SELECT s FROM Student s")
+        @NamedQuery(name="Student.findAll", query="SELECT s FROM Student s"),
+        @NamedQuery(name="Student.deleteAll", query="DELETE FROM Student s")
 })
 public class Student {
 
@@ -24,8 +25,10 @@ public class Student {
     private String city;
     private String zipcode;
     private String birthdate;
-    @Transient
+
+    @ManyToMany(mappedBy = "students")
     private List<Subject> subjects;
+
     @Transient
     private SimpleDateFormat formatter;
 
@@ -48,19 +51,7 @@ public class Student {
         this.birthdate = this.formatter.format(birthdate);
     }
 
-    public Student(Student newStudent) {
-        this.id = newStudent.getId();
-        this.name = newStudent.getName();
-        this.email = newStudent.getEmail();
-        this.phonenumber = newStudent.getPhonenumber();
-        this.address = newStudent.getAddress();
-        this.city = newStudent.getCity();
-        this.zipcode = newStudent.getZipcode();
-        this.birthdate = newStudent.getBirthdate();
-    }
-
     public Student() {
-
     }
 
     public void addSubject(Subject subject) {

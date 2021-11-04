@@ -18,6 +18,10 @@ public class StudentRepository implements IStudentRepository {
 
     private EntityManagerFactory emf;
 
+    public StudentRepository(String persistenceUnitName){
+        this.emf = Persistence.createEntityManagerFactory(persistenceUnitName);
+    }
+
     public StudentRepository(){
         this.emf = Persistence.createEntityManagerFactory("student-attendance");
     }
@@ -28,12 +32,11 @@ public class StudentRepository implements IStudentRepository {
         EntityManager em = emf.createEntityManager();
 
         em.getTransaction().begin();
-        Student student = new Student(newStudent);
-        em.persist(student);
+        em.persist(newStudent);
         em.getTransaction().commit();
         em.close();
 
-        return student;
+        return newStudent;
     }
 
     @Override
@@ -64,6 +67,16 @@ public class StudentRepository implements IStudentRepository {
         }
 
         em.remove(student);
+        em.getTransaction().commit();
+        em.close();
+    }
+
+    @Override
+    public void deleteAll() {
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+        em.createNamedQuery("Student.deleteAll").executeUpdate();
+        em.flush();
         em.getTransaction().commit();
         em.close();
     }

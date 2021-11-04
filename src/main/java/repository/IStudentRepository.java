@@ -15,4 +15,6 @@ public interface IStudentRepository {
     List<Student> findAll();
 
     void delete(UUID id) throws NotFoundException;
+
+    void deleteAll();
 }

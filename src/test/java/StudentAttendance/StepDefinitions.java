@@ -4,12 +4,17 @@ import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import fakes.FakeLectureRepository;
 import fakes.FakeStudentRepository;
+import fakes.FakeSubjectRepository;
 import models.Lecture;
 import models.Student;
 import models.Subject;
 import models.Teacher;
+import repository.ILectureRepository;
 import repository.IStudentRepository;
+import repository.ISubjectRepository;
+
 import java.util.*;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -19,10 +24,13 @@ public class StepDefinitions {
     private Student newStudent;
     private Teacher teacher;
     private Lecture lecture;
+    private Lecture newLecture;
     private Subject subject;
     private Date date;
     private List<Student> students = new ArrayList();
     private IStudentRepository repository = new FakeStudentRepository();
+    private ILectureRepository lectureRepository = new FakeLectureRepository();
+    private ISubjectRepository subjectRepository = new FakeSubjectRepository();
 
     private String name;
     private String email;
@@ -32,19 +40,19 @@ public class StepDefinitions {
     private String zipcode;
     private Date birthdate;
 
+    private UUID subjectId;
+
     @Given("^the student is attending the class$")
     public void the_student_is_attending_the_class() throws Exception {
         student = new Student("Benjamin");
         teacher = new Teacher("Lars");
         subject = new Subject("Software Testing", teacher);
 
+        date = new GregorianCalendar(2014, Calendar.FEBRUARY, 12).getTime();
+        lecture = subject.addLecture(date);
+
         student.addSubject(subject);
         teacher.addSubject(subject);
-
-        date = new GregorianCalendar(2014, Calendar.FEBRUARY, 11).getTime();
-        subject.addLecture(date);
-        lecture = subject.getLecture(date);
-
     }
 
     @When("^I fill in the student id$")
@@ -89,20 +97,32 @@ public class StepDefinitions {
 
     @Given("^I check the attendance system$")
     public void i_check_the_attendance_system() throws Exception {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+        student = new Student("Benjamin");
+        teacher = new Teacher("Lars");
+        subject = new Subject("Software Testing", teacher);
+
+        student.addSubject(subject);
+        teacher.addSubject(subject);
+
+        date = new GregorianCalendar(2014, Calendar.FEBRUARY, 11).getTime();
+        newLecture = subject.addLecture(date);
+        newLecture.addAttendee(student);
+
+        subject = subjectRepository.save(subject);
+        subjectId = subject.getId();
     }
 
     @When("^I fill in the class and date$")
     public void i_fill_in_the_class_and_date() throws Exception {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+        Optional<Subject> opSubject = subjectRepository.findById(subjectId);
+        subject = opSubject.get();
+        lecture = subject.getLecture(date);
     }
 
     @Then("^I should see a list of students who was present$")
     public void i_should_see_a_list_of_students_who_was_present() throws Exception {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+        students = lecture.getAttendees();
+        assertTrue(students.contains(student));
     }
 
 

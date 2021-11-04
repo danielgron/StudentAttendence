@@ -54,4 +54,9 @@ public class FakeStudentRepository implements IStudentRepository {
 
         students.remove(studentToDelete);
     }
+
+    @Override
+    public void deleteAll() {
+        students = new ArrayList<>();
+    }
 }
