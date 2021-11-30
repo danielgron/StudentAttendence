@@ -12,9 +12,10 @@ Go to localhost:8082 and login to database:
 
 To make Redis database within a docker container, run:
 ```{r, engine='bash', count_lines}
-docker run --name my-redis -v redis-data:/data -d redis:alpine
+docker run --name studentattendance-redis -v redis-data:/data -d redis:alpine
 ```
 
+To execute commands within the redis CLI run:
 ```{r, engine='bash', count_lines}
-docker exec -it my-redis redis-cli
+docker exec -it studentattendance-redis redis-cli
 ```
