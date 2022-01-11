@@ -10,7 +10,15 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-
+- task: SonarQubePrepare@5
+  inputs:
+    SonarQube: 'sonar'
+    scannerMode: 'Other'
+    extraProperties: |
+      # Additional properties that will be passed to the scanner,
+      # Put one key=value per line, example:
+      # sonar.exclusions=**/*.bin
+      sonar.projectKey=sa
 - task: Maven@3
   inputs:
     mavenPomFile: 'pom.xml'
@@ -21,3 +29,8 @@ steps:
     publishJUnitResults: true
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
     goals: 'package'
+    sonarQubeRunAnalysis: true
+
+- task: SonarQubePublish@5
+  inputs:
+    pollingTimeoutSec: '3000'
