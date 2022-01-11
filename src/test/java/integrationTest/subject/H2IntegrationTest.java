@@ -6,6 +6,7 @@ import models.Subject;
 import models.Teacher;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import repository.IStudentRepository;
 import repository.ISubjectRepository;
@@ -34,16 +35,25 @@ public class H2IntegrationTest {
 
     }
 
+    @BeforeEach
+    void setupEach(){
+        Teacher teacher = new Teacher("Lis");
+        newSubject = new Subject("Undersøgelse og Formidling", teacher);
+    }
+
     @AfterAll
     static void tearDown() throws NotFoundException {
         repository.deleteAll();
     }
 
+    /* Not implemented
     @Test
     void testH2DatabaseIsActive() {
         List<Subject> subjects = repository.findAll();
         assertTrue(subjects.size() >= 0);
     }
+
+     */
 
     @Test
     void testCreateSubject() {
