@@ -30,6 +30,11 @@ steps:
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
     goals: 'package'
     sonarQubeRunAnalysis: true
+- task: PublishCodeCoverageResults@1
+  inputs:
+    codeCoverageTool: 'JaCoCo'
+    summaryFileLocation: '**/jacoco.exec'
+
 
 - task: SonarQubePublish@5
   inputs:
