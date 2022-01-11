@@ -33,7 +33,7 @@ steps:
 - task: PublishCodeCoverageResults@1
   inputs:
     codeCoverageTool: 'JaCoCo'
-    summaryFileLocation: '**/jacoco.exec'
+    summaryFileLocation: 'target/site/jacoco/jacoco.xml'
 
 
 - task: SonarQubePublish@5
